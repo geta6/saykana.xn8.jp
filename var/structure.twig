@@ -1,0 +1,42 @@
+{% spaceless %}
+
+<!DOCTYPE html>
+<html>
+
+
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=0.5'>
+    <title>{{ app.domain }}</title>
+    {% if app.mobile %}
+      <link rel='stylesheet' href='/src/styles.mb.css'>
+    {% else %}
+      <link rel='stylesheet' href='/src/styles.css'>
+    {% endif %}
+  </head>
+
+
+  <body>
+
+    <div id='logo'>
+      {% if 'たい.jp' == app.domain %}
+        <img src='/src/img/tai.png'>
+      {% elseif 'ない.jp' == app.domain %}
+        <img src='/src/img/nai.png'>
+      {% else %}
+        <img src='/src/img/logo.png'>
+      {% endif %}
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <a id='right' href='//www.geta6.net'>&copy; {{ 'now'|date('Y') }} geta6</a>
+
+    <script src='/src/scripts.js'></script>
+
+  </body>
+
+
+</html>
+
+{% endspaceless %}

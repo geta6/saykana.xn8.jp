@@ -1,0 +1,53 @@
+{% extends 'structure.twig' %}
+
+
+
+{% block content %}
+
+
+{% if '' == app.subdomain %}
+  <form action='/redirect' method='GET'>
+    <h1><input type='text' name='query'>.{{ app.domain }}</h1>
+  </form>
+{% else %}
+  {% if '' == thumb %}
+    <h1><b>{{ app.subdomain }}</b>.{{ app.domain }}</h1>
+  {% else %}
+    <h1><b>{{ app.subdomain }}</b>.{{ app.domain }}</h1>
+    <h1><img src='/src/thumb/{{ query }}.png'></h1>
+  {% endif %}
+{% endif %}
+
+
+{% if app.mobile %}
+  <audio id='audio' src='/say/{{ query|url_encode }}' controls autoplay></audio>
+{% else %}
+  <audio id='audio' src='/say/{{ query|url_encode }}' autoplay></audio>
+{% endif %}
+
+<script>audio = document.getElementById('audio'); audio.addEventListener('canplaythrough', function () { audio.play(); }, false);</script>
+
+
+<div id='content'>
+  <ul>
+    <li class='row fqdn '>FQDN</li>
+    <li class='row query'>Query</li>
+    <li class='row times'>Times</li>
+    <li class='row date '>Init</li>
+    <li class='row last '>Last</li>
+  </ul>
+  {% for db in stm %}
+    <a class='sort' href='http://{{ db.fqdn }}' x-fqdn={{ db.fqdn }} x-query={{ db.query }} x-times={{ db.times }} x-date={{ db.date | date('U')}} x-last={{ db.last|date('U') }}>
+      <ul>
+        <li class='row fqdn '><p>{{ db.fqdn  }}</p></li>
+        <li class='row query'><p>{{ db.query }}</p></li>
+        <li class='row times'><p>{{ db.times }}</p></li>
+        <li class='row date '><p>{{ db.date | date('y-m-d H:i') }}</p></li>
+        <li class='row last '><p>{{ db.last | date('y-m-d H:i') }}</p></li>
+      </ul>
+    </a>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
